@@ -19,10 +19,6 @@ const userSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Thought',
     }],
-  friends: [{
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    }],
   },
   {
     toJSON: {
@@ -32,21 +28,11 @@ const userSchema = new Schema({
   }
 );
 
-userSchema.virtual('friendCount')
+/*userSchema.virtual('friendCount')
   .get(function() {
     return this.friends.length;
-  });
+  });*/
 
 const User = model('User', userSchema);
-
-/*const handleError = (err) => console.error(err);
-
-User.create(
-  {
-    username: 'stev232',
-    email: 'stev232@yahoo.com',
-  },
-  (err) => (err ? handleError(err) : console.log('Created new document'))
-);*/
 
 module.exports = User;
