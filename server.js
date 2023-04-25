@@ -1,10 +1,6 @@
 const express = require('express');
 const db = require('./config/connection');
 const routes = require('./routes');
-// Require model
-const { User } = require('./models');
-const { Reaction } = require('./models');
-const { Thought } = require('./models');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
