@@ -1,24 +1,29 @@
-const { Post } = require('../models');
+const { User } = require('../models');
 
 module.exports = {
-  getPosts(req, res) {
-    Post.find()
-      .then((posts) => res.json(posts))
+  getUsers(req, res) {
+    User.find()
+      .then((users) => res.json(users))
       .catch((err) => res.status(500).json(err));
   },
-  getSinglePost(req, res) {
-    Post.findOne({ _id: req.params.postId })
-      .then((post) =>
+  
+  getSingleUser(req, res) {
+    User.findOne({ _id: req.params.postId })
+      .then((user) =>
         !post
-          ? res.status(404).json({ message: 'No post with that ID' })
-          : res.json(post)
+          ? res.status(404).json({ message: 'There is no user with that ID' })
+          : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
   },
-  // create a new post
-  createPost(req, res) {
-    Post.create(req.body)
-      .then((dbPostData) => res.json(dbPostData))
+  
+  createUser(req, res) {
+    User.create(req.body)
+      .then((dbUserData) => res.json(dbUserData))
       .catch((err) => res.status(500).json(err));
   },
+
+  deleteUser(req, res) {
+
+  }
 };
