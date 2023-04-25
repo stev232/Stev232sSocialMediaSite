@@ -55,4 +55,22 @@ module.exports = {
       .then(() => res.json({ message: 'User and associated thoughts deleted!' }))
       .catch((err) => res.status(500).json(err));
   },
+  
+  createFriend(req, res) {
+    User.create(req.body)
+      .then((user) => res.json(user))
+      .catch((err) => res.status(500).json(err));
+  },
+  
+  deleteFriend(req, res) {
+    User.findOneAndDelete({ _id: req.params.userId })
+      .then((user) => {
+        if(!user) {
+          res.status(404).json({ message: userMessage });
+        }
+        Thought.deleteMany({ _id: { $in: user.thought } });
+      })
+      .then(() => res.json({ message: 'User and associated thoughts deleted!' }))
+      .catch((err) => res.status(500).json(err));
+  },
 };
