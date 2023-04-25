@@ -12,8 +12,7 @@ const userSchema = new Schema({
   email: { 
     type: String,  
     required: true, 
-    unique: true, 
-    validate: [validateEmail, 'Please fill a valid email address'],
+    unique: true,
     match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
   },
   thoughts: [{
@@ -40,16 +39,14 @@ userSchema.virtual('friendCount')
 
 const User = model('User', userSchema);
 
-module.exports = User;
-
 /*const handleError = (err) => console.error(err);
 
 User.create(
   {
-    item: 'banana',
-    stockCount: 10,
-    price: 1,
-    inStock: true,
+    username: 'stev232',
+    email: 'stev232@yahoo.com',
   },
   (err) => (err ? handleError(err) : console.log('Created new document'))
 );*/
+
+module.exports = User;
