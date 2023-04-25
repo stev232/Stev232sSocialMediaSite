@@ -1,5 +1,6 @@
 const { Thought, Reaction } = require('../models');
 const thoughtMessage = 'There were no thoughts found with that id';
+const reactionMessage = 'There were no reactions found with that id';
 
 module.exports = {
   getThoughts(req, res) {
@@ -7,7 +8,7 @@ module.exports = {
       .then((thought) => res.json(thought))
       .catch((err) => res.status(500).json(err));
   },
-  // Get a single comment
+  
   getSingleThought(req, res) {
     Thought.findOne({ _id: req.params.thoughtId })
       .then((thought) => {
@@ -18,7 +19,7 @@ module.exports = {
       })
       .catch((err) => res.status(500).json(err));
   },
-  // Create a comment
+  
   createThought(req, res) {
     Thought.create(req.body)
       .then((thought) => {
@@ -67,5 +68,36 @@ module.exports = {
       })
       .then(() => res.json({ message: 'Thought and associated reactions deleted!' }))
       .catch((err) => res.status(500).json(err));
+  },
+
+  createReaction(req, res) {
+    Reaction.findOneAndUpdate(
+      { _id: req.params.reactionId },
+      { $set: req.body },
+      { runValidators: true, new: true }
+    )
+      .then((reaction) => {
+        if(!reaction) {
+          res.status(404).json({ message: reactionMessage });
+        }
+        res.json(reaction);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+
+  },
+
+  deleteReaction(req, res) {
+    Reaction.findOneAndDelete({ _id: req.params.reactionId })
+      .then((reaction) => {
+        if(!reaction) {
+          res.status(404).json({ message: reactionMessage });
+        }
+      })
+      .then(() => res.json({ message: 'The reaction was deleted!' }))
+      .catch((err) => res.status(500).json(err));
+
   },
 };
